@@ -40,9 +40,9 @@ export default function Home() {
       setLoadingData(true);
 
       try {
-        await getSubjectStats();
-        await getCreatorStats();
-        await getAllAttestations();
+        getSubjectStats();
+        getCreatorStats();
+        getAllAttestations();
       } catch (e) {
         setLoadingDataError(e.message);
       }
