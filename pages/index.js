@@ -34,22 +34,15 @@ export default function Home() {
   const [creatorStats, setCreatorStats] = useState([]);
   const [subjectStats, setSubjectStats] = useState([]);
   const [loadingDataError, setLoadingDataError] = useState(null);
-  const urls = [
-    "/api/subjectStats",
-    "/api/creatorStats",
-    "/api/allAttestations",
-  ];
 
   useEffect(() => {
     async function getData() {
       setLoadingData(true);
 
       try {
-        await Promise.allSettled([
-          getSubjectStats(),
-          getCreatorStats(),
-          getAllAttestations(),
-        ]);
+        await getSubjectStats();
+        await getCreatorStats();
+        await getAllAttestations();
       } catch (e) {
         setLoadingDataError(e.message);
       }
