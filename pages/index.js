@@ -40,9 +40,10 @@ export default function Home() {
       setLoadingData(true);
 
       try {
-        getSubjectStats();
-        getCreatorStats();
-        getAllAttestations();
+        await Promise.allSettled([
+          getSubjectStats(),
+          getCreatorStats(),
+        ]);
       } catch (e) {
         setLoadingDataError(e.message);
       }
@@ -120,13 +121,13 @@ export default function Home() {
           error={loadingDataError}
         />
 
-        <Card
+        {/* <Card
           title={"All Attestations"}
           subtitle={"We return all attestations"}
           loading={loadingData}
           data={allAttestations}
           error={loadingDataError}
-        />
+        /> */}
       </div>
     </div>
   );
