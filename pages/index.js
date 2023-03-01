@@ -34,6 +34,7 @@ export default function Home() {
   const [creatorStats, setCreatorStats] = useState([]);
   const [subjectStats, setSubjectStats] = useState([]);
   const [loadingDataError, setLoadingDataError] = useState(null);
+  const DELAY = 1000
 
   useEffect(() => {
     async function getData() {
@@ -43,6 +44,7 @@ export default function Home() {
         await Promise.allSettled([
           getSubjectStats(),
           getCreatorStats(),
+          getAllAttestations()
         ]);
       } catch (e) {
         setLoadingDataError(e.message);
@@ -54,8 +56,13 @@ export default function Home() {
     getData();
   }, []);
 
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   async function getSubjectStats() {
     try {
+      delay(DELAY)
       const resp = await fetch("/api/subjectStats");
       const parse = await resp.json();
       setSubjectStats(parse.data);
@@ -66,6 +73,7 @@ export default function Home() {
 
   async function getCreatorStats() {
     try {
+      delay(DELAY)
       const resp = await fetch("/api/creatorStats");
       const parse = await resp.json();
       setCreatorStats(parse.data);
@@ -76,6 +84,7 @@ export default function Home() {
 
   async function getAllAttestations() {
     try {
+      delay(DELAY)
       const resp = await fetch("/api/allAttestations");
       const parse = await resp.json();
       setAllAttestations(parse.data);
@@ -121,13 +130,13 @@ export default function Home() {
           error={loadingDataError}
         />
 
-        {/* <Card
+        <Card
           title={"All Attestations"}
           subtitle={"We return all attestations"}
           loading={loadingData}
           data={allAttestations}
           error={loadingDataError}
-        /> */}
+        />
       </div>
     </div>
   );
